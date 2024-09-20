@@ -1,0 +1,43 @@
+{
+    "user_query": "How do I get the number of tokens used by the LLM, along with the completion?",
+    "denser_retriever_api_response": {
+        "passages": [
+            {
+                "page_content": "print(completion.usage) # (3)!\n    print(resp)\n```\n\n1. Using the `create_with_completion` method we can get back both the structured response and the completion object\n2. We set the `cache_control` parameter to \"ephemeral\" to tell Anthropic to cache the book content temporarily\n3. We print out the usage information to monitor token consumption\n\nYou'll notice that the usage information is different than what we've seen before. This is because we're now using the `create_with_completion` method which returns both the structured response and the completion object. The completion object contains usage information which we can use to monitor token consumption.\n\nWhen we run this, you'll notice that we get the following output.\n\n```bash\nPromptCachingBetaUsage(\n    cache_creation_input_tokens=2856,\n    cache_read_input_tokens=0,\n    input_tokens=30,\n    output_tokens=119\n)",
+                "score": 1.5472111701965332,
+                "metadata": {
+                    "source": "data-sources/cm1axvcue000b4r8h8insa5xo/zRO5VOs2T_NXyRuJaA_j9.markdown",
+                    "title": "",
+                    "pid": "391bc904aba9406481d886e67725d3a9"
+                }
+            },
+            {
+                "page_content": "print(completion.usage)\n#> CompletionUsage(completion_tokens=9, prompt_tokens=82, total_tokens=91)\n```\n\nYou can catch an IncompleteOutputException whenever the context length is exceeded and react accordingly, such as by trimming your prompt by the number of exceeding tokens.\n\n```python\nfrom instructor.exceptions import IncompleteOutputException\nimport openai\nimport instructor\nfrom pydantic import BaseModel\n\nclient = instructor.from_openai(openai.OpenAI())\n\n\nclass UserExtract(BaseModel):\n    name: str\n    age: int\n\n\ntry:\n    client.chat.completions.create_with_completion(\n        model=\"gpt-3.5-turbo\",\n        response_model=UserExtract,\n        messages=[\n            {\"role\": \"user\", \"content\": \"Extract jason is 25 years old\"},\n        ],\n    )\nexcept IncompleteOutputException as e:\n    token_count = e.last_completion.usage.total_tokens  # type: ignore\n    # your logic here\n```\n\nEND FILE: concepts/usage.md",
+                "score": 1.471126914024353,
+                "metadata": {
+                    "source": "data-sources/cm1axvcue000b4r8h8insa5xo/zRO5VOs2T_NXyRuJaA_j9.markdown",
+                    "title": "",
+                    "pid": "eacb7102682348969abdfe1833294ffe"
+                }
+            },
+            {
+                "page_content": "# Use selected questions as examples for the LLM\n    response = client.chat.completions.create(\n        model=\"gpt-4o\",\n        response_model=FinalAnswer,\n        messages=[\n            {\n                \"role\": \"user\",\n                \"content\": f\"\"\"\n                {selected_examples}\n                If there are 10 books in my bad and I read 8 of them, how many books do I have left? Let's think step by step.\n                \"\"\",\n            }\n        ],\n    )\n\n    print(response.reasoning_steps)\n    \"\"\"\n    [\n        'Start with the total number of books in the bag, which is 10.',\n        \"Subtract the number of books you've read, which is 8, from the total books.\",\n        '10 - 8 = 2, so you have 2 books left.',\n    ]\n    \"\"\"\n    print(response.answer)\n    #> 2\n```\n\n### References\n\n<sup id=\"ref-1\">1</sup>: [Automatic Chain of Thought Prompting in Large Language Models](https://arxiv.org/abs/2210.03493)",
+                "score": 1.1798021793365479,
+                "metadata": {
+                    "source": "data-sources/cm1axvcue000b4r8h8insa5xo/zRO5VOs2T_NXyRuJaA_j9.markdown",
+                    "title": "",
+                    "pid": "a5157791c16145b7bc838cc76f70593c"
+                }
+            },
+            {
+                "page_content": "Generators shine in scenarios like reading large files, data streaming (eg. llm token streaming), and pipeline creation for data processing.\n\n## LLM Streaming\n\nIf you've used ChatGPT, you'll see that the tokens are streamed out one by one, instead of the full response being shown at the end (can you imagine waiting for the full response??). This is made possible by generators.\n\nHere's how a vanilla openai generator looks:\n\n```python\nfrom openai import OpenAI\n\n# Set your OpenAI API key\nclient = OpenAI(\n    api_key=\"My API Key\",\n)\n\nresponse_generator = client.chat.completions.create(\n    model='gpt-3.5-turbo',\n    messages=[{'role': 'user', 'content': \"What are some good reasons to smile?\"}],\n    temperature=0,\n    stream=True,\n)\n\nfor chunk in response_generator:\n    print(chunk.choices[0].delta.content, end=\"\")\n```",
+                "score": 0.6371694803237915,
+                "metadata": {
+                    "source": "data-sources/cm1axvcue000b4r8h8insa5xo/zRO5VOs2T_NXyRuJaA_j9.markdown",
+                    "title": "",
+                    "pid": "44f4780364c04ad6986131baa4e98375"
+                }
+            }
+        ]
+    }
+}
