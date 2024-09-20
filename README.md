@@ -16,6 +16,11 @@ Instructor Q&A is a RAG (Retrieval-Augmented Generation) chatbot specifically de
 - Groq API is used as an example (they have super fast inference⚡), instructor supports both local and commercial models.
 - This project uses `Q and A on the instructor library` as an example (as I was exploring the instructor library for structured data extraction and thought of creating a RAG chatbot for it, to solve my doubts), but can be adapted for any knowledge base by creating a retriever with the relevant docs.
 
+![screencapture-denser-retriever-rag-chatbot-streamlit-app-2024-09-21-02_19_33](https://github.com/user-attachments/assets/de559975-2605-4017-82ee-ba1979ec2811)
+
+![image](https://github.com/user-attachments/assets/387dc080-f33a-4fba-a9aa-e8139bfcf2b0)
+
+
 ## Installation
 
 1. Clone the repository:
