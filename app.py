@@ -105,8 +105,11 @@ Answer the user's question from the context given below:
 {context}
 """,
         },
-        *st.session_state.messages,
     ]
+
+    # Add user messages without 'chunks'
+    for message in st.session_state.messages:
+        messages.append({"role": message["role"], "content": message["content"]})
 
     # Get response from Groq API
     try:
@@ -167,8 +170,8 @@ with col2:
             E --> F[Response displayed in chat]
         """
         stmd.st_mermaid(mermaid_code, height="400px")
-# Export chat history
 
+# Export chat history
 col3, col4 = st.sidebar.columns(2)
 with col3:
     if col3.button("Export Chat History 📤"):
@@ -184,7 +187,7 @@ with col3:
 
         st.sidebar.download_button(
             label="Download JSON",
-            data=json.dumps(chat_export, indent=2),
+            data=json.dumps(chat_export, indent=4),
             file_name="chat_history.json",
             mime="application/json",
         )
@@ -194,3 +197,13 @@ with col4:
     if col4.button("Clear Chat History 🗑️"):
         st.session_state.messages = []
         st.rerun()
+
+# Add example questions to the sidebar
+examples = [
+    "What is the primary purpose of the Instructor library in Python?",
+    "How to get usage tokens along with completion?",
+    "What LLM models does instructor support?",
+]
+with st.sidebar.expander("Sample Questions:"):
+    for i in examples:
+        st.code(i, wrap_lines=True, language="md")
