@@ -102,3 +102,10 @@ graph TD
 
 ### Streamlit
 - Streamlit-specific configurations can be adjusted in the `streamlit/config.toml` file if needed.
+
+## References:
+- https://retriever.denser.ai/
+- https://retriever-docs.denser.ai/docs/core
+- https://retriever-docs.denser.ai/docs/api/retrievers-api/retrieve
+- https://retriever.denser.ai/blogs/gpt-guide
+- https://github.com/tonykipkemboi/groq_streamlit_demo
