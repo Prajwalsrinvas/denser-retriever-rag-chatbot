@@ -103,6 +103,8 @@ graph TD
 ### Streamlit
 - Streamlit-specific configurations can be adjusted in the `streamlit/config.toml` file if needed.
 
+## [Setting up a Retriever with documents from your knowledge base, on DenserRetriever](https://app.tango.us/app/workflow/Setting-up-a-Retriever-with-documents-from-your-knowledge-base--on-DenserRetriever-8145d736550d40a7b6378faa9f78514e)
+
 ## References:
 - https://retriever.denser.ai/
 - https://retriever-docs.denser.ai/docs/core
