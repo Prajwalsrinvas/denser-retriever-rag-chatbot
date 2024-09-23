@@ -105,6 +105,9 @@ graph TD
 
 ## [Setting up a Retriever with documents from your knowledge base, on DenserRetriever](https://app.tango.us/app/workflow/Setting-up-a-Retriever-with-documents-from-your-knowledge-base--on-DenserRetriever-8145d736550d40a7b6378faa9f78514e)
 
+- DenserRetriever supports loading data from webpages and websites.
+- I used [dump_dir](https://github.com/fargusplumdoodle/dump_dir) to create a single md file from [here](https://github.com/jxnl/instructor/tree/main/docs), and it was added to its knowledge base.
+
 ## References:
 - https://retriever.denser.ai/
 - https://retriever-docs.denser.ai/docs/core
